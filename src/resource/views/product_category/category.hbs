@@ -43,10 +43,11 @@
 
     <div class="box-container">
 
-        {{#each cs}}
+        {{#each item}}
         <div class="box">
             <a href="#" class="fas fa-heart"></a>
-            <div class="image">
+            <a href="/product/{{this.category}}/{{this.slug}}">
+             <div class="image">
                 <img src="{{this.image}}" alt="">
             </div>
             <div class="content">
@@ -62,6 +63,7 @@
                 <div class="price">{{this.new_price}} <span>{{this.old_price}}</span></div>
                 <a href="/product/{{this.category}}/{{this.slug}}" class="btn">BUY NOW</a>
             </div>
+            </a>
         </div>
         {{/each}}
 

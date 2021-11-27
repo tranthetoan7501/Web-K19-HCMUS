@@ -1,0 +1,26 @@
+
+
+<div class="function-form-container">
+
+    <form method="post" action="/admin/{{item.id}}/storeUpdate?_method=PUT">
+        <h3>update dish</h3>
+        <label for="id">Type</label>
+        <input type="text" name="category" value="{{item.category}}" id="category" class="box">
+        <label for="id">description</label>
+        <textarea name="description"  id="description" class="box">{{item.description}}</textarea>
+        <label for="id">Name</label>
+        <input type="text" name="name" value="{{item.name}}" id="name" class="box">
+        <label for="id">Old Price</label>
+        <input type="text" name="old_price" value="{{item.old_price}}" id="old_price" class="box">
+        <label for="id">New Price</label>
+        <input type="text" name="new_price" value="{{item.new_price}}" id="new_price" class="box">
+        <label for="id">Remaining</label>
+        <input type="text" name="in_stock" value="{{item.in_stock}}" id="in_stock" class="box">
+        <label for="id">Link Image</label>
+        <input type="text" name="image" value="{{item.image}}" id="image" class="box">
+        
+        <button type="submit" class="btn">Save</button>
+    </form>
+
+</div>
+
