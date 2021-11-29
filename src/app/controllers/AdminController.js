@@ -17,15 +17,14 @@ class AdminController{
                 var newId = item.id + 1;
                 const newItem = req.body;
                 let mySlug = req.body.name;
-                newItem.slug = mySlug.replace(/ /g,'-') + req.body.id;
+                newItem.slug = mySlug.replace(/ /g,'-') + "-" + newId;
                 newItem.rating = 0.0;
                 newItem.id = newId;
                 newItem.num_rating=0;
                 const menu = new Menu(newItem);
-                menu.save()
-                    .then(()=>res.redirect('/admin/storedItems'))
-                    .catch(next);
+                return menu.save();
             })
+            .then(()=>res.redirect('/admin/storedItems'))
             .catch(next);
     }
 
