@@ -11,21 +11,31 @@ class AdminController{
 
     // //post : store
     store(req,res,next){
-        const newItem = req.body;
-        let mySlug = req.body.name;
-        newItem.slug = mySlug.replace(/ /g,'-');
-        newItem.rating = 0.0;
-        newItem.num_rating=0;
-        const menu = new Menu(newItem);
-        menu.save();
-        res.render('admin/saved');
+        Menu.findOne()
+            .sort('-id')
+            .then((item) => {
+                var newId = item.id + 1;
+                const newItem = req.body;
+                let mySlug = req.body.name;
+                newItem.slug = mySlug.replace(/ /g,'-') + req.body.id;
+                newItem.rating = 0.0;
+                newItem.id = newId;
+                newItem.num_rating=0;
+                const menu = new Menu(newItem);
+                menu.save()
+                    .then(()=>res.redirect('/admin/storedItems'))
+                    .catch(next);
+            })
+            .catch(next);
     }
+
     storedItems(req,res,next){
         Menu.find({})
             .then(item => res.render('admin/storedItems',{ 
                 item : ToArrObject(item)
             }))
             .catch(next);
+        
     }
     update(req,res,next){
         Menu.findOne({id:req.params.id})
@@ -38,7 +48,7 @@ class AdminController{
     storeUpdate(req,res,next){
         const newItem = req.body;
         let mySlug = req.body.name;
-        newItem.slug = mySlug.replace(/ /g,'-');
+        newItem.slug = mySlug.replace(/ /g,'-') + "-" + req.params.id;
         newItem.updateAt = Date.now();
         Menu.updateOne({id:req.params.id},newItem)
             .then(()=>res.redirect('/admin/storedItems'))
@@ -50,9 +60,6 @@ class AdminController{
             .then(()=>res.redirect('back'))
             .catch(next);
     }
-
-
-
 
 }
 module.exports = new AdminController;
