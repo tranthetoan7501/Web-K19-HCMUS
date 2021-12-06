@@ -792,3 +792,24 @@ table,th,td{
   border-collapse: collapse;
   text-align: center;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9 !important;
+  min-width: 160px;
+  box-shadow: 4px 11px 16px 5px rgba(0, 0, 0, 0.2);
+  padding: 5px 5px !important;
+  z-index: 100;
+  height:fit-content !important;
+  left: -50px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

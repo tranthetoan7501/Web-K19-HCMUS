@@ -2,37 +2,51 @@ const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 
 class ProductsController{
 
     //get//product
     index(req,res,next){
+        if(req.query.search) {
+            const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+            Menu.find({name: regex},{},{option: "i"})
+                .then(item => res.render('product_category/category',{
+                    item : ToArrObject(item)
+                }))
+                .catch(next);
+        }
+     else {
         Promise.all([Menu.find({}),Menu.count({})])
-            .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 16;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i
-                    });
-                }              
-                res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
-                    totalPageArr
-                })
+        .then(([item,count])=>{
+            let page = parseInt(req.query.page)||1;
+            const perPage = 16;
+            let totalPage = Math.floor(count/perPage) + 1;
+            let start = (page-1)*perPage;
+            let end;
+            if (page==totalPage){
+                end = count;
             }
-            )
+            else{
+                end = start + perPage;
+            }
+            let totalPageArr = [];
+            for (let i=1;i<=totalPage;i++){
+                totalPageArr.push({
+                    value : i,
+                    isCurrent: page === i
+                });
+            }              
+            res.render('product_category/category',{
+                item: ToArrObject(item).slice(start,end),
+                totalPageArr
+            })
+        }
+        )
+        }
     }
 
     //get : product/category
