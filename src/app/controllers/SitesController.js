@@ -1,5 +1,5 @@
 const Menu = require('../models/Menu');
-
+const userService = require('../service/userService')
 class SitesController{
 
     //get//new
@@ -28,11 +28,17 @@ class SitesController{
     up(req,res){
     res.render('sign-up');
     }
-
+    
     async submit(req,res){
-        const {name,username,password,email,date,phoneNumber,role} = req.body;
-        const user = await userService.register(name,username,password,email,phoneNumber,date,role);
-        res.redirect("/sign-in");
+        const {name,username,password,email,date,phoneNumber} = req.body;
+        const error = await userService.checkValidInput(name,username,password,email,date,phoneNumber);
+        if(error === {}) {
+            res.render('sign-up',{error})
+        }
+        else{
+        const user = await userService.register(name,username,password,email,phoneNumber,date);
+        res.render("sign-up",{user});
+        }
     }
 }
 module.exports = new SitesController;

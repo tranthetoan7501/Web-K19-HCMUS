@@ -60,5 +60,10 @@ class AdminController{
             .catch(next);
     }
 
+    viewAccount(req,res,next){
+        res.render("admin/profile");
+    }
+
+
 }
 module.exports = new AdminController;

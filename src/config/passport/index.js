@@ -12,6 +12,10 @@ passport.use(new LocalStrategy(
     if(!valid){
         return done(null,false,{message: "Incorrect password"});
     }
+    // const role = userService.validRole(user);
+    // if(!role) {
+    //   return done(null,false,{message: "Role"});
+    // }
     return done(null,user);
 },
 ));
