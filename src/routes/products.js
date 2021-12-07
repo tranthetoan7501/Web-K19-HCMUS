@@ -13,8 +13,8 @@ router.get('/burger/:slug',productsController.burgerDetail);
 router.get('/burger',productsController.burger);
 router.get('/chicken/:slug',productsController.chickenDetail);
 router.get('/chicken',productsController.chicken);
-router.get('/side-dishes/:slug',productsController.dinnerDetail);
-router.get('/side-dishes',productsController.dinner);
+router.get('/side-dishes/:slug',productsController.sideDishesDetail);
+router.get('/side-dishes',productsController.sideDishes);
 router.get('/drink/:slug',productsController.drinkDetail);
 router.get('/drink',productsController.drink);
 

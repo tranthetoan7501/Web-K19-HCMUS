@@ -1,11 +1,10 @@
 const Menu = require('../models/Menu');
-const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
+const ProductsService = require('../service/productsService');
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
-
 
 class ProductsController{
 
@@ -22,26 +21,10 @@ class ProductsController{
      else {
         Promise.all([Menu.find({}),Menu.count({})])
         .then(([item,count])=>{
-            let page = parseInt(req.query.page)||1;
-            const perPage = 16;
-            let totalPage = Math.floor(count/perPage) + 1;
-            let start = (page-1)*perPage;
-            let end;
-            if (page==totalPage){
-                end = count;
-            }
-            else{
-                end = start + perPage;
-            }
-            let totalPageArr = [];
-            for (let i=1;i<=totalPage;i++){
-                totalPageArr.push({
-                    value : i,
-                    isCurrent: page === i
-                });
-            }              
+            let items = ProductsService.viewItem(req.query.page,count,item);
+            let totalPageArr = ProductsService.paginationArray(req.query.page,count,"");           
             res.render('product_category/category',{
-                item: ToArrObject(item).slice(start,end),
+                item: items,
                 totalPageArr
             })
         }
@@ -51,34 +34,12 @@ class ProductsController{
 
     //get : product/category
     combo(req,res,next){
-        // Menu.find({category:'combo'})
-        //     .then(item => res.render('product_category/category',{ 
-        //         item : ToArrObject(item)
-        //     }))
-        //     .catch(next);
         Promise.all([Menu.find({category:'combo'}),Menu.count({category:'combo'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/combo"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/combo");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
@@ -96,27 +57,10 @@ class ProductsController{
     pizza(req,res,next){
         Promise.all([Menu.find({category:'pizza'}),Menu.count({category:'pizza'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/pizza"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/pizza");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
@@ -134,27 +78,10 @@ class ProductsController{
     burger(req,res,next){
         Promise.all([Menu.find({category:'burger'}),Menu.count({category:'burger'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/burger"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/burger");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
@@ -172,27 +99,10 @@ class ProductsController{
     chicken(req,res,next){
         Promise.all([Menu.find({category:'chicken'}),Menu.count({category:'chicken'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/chicken"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/chicken");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
@@ -207,37 +117,20 @@ class ProductsController{
             .catch(next);
     }
 
-    dinner(req,res,next){
+    sideDishes(req,res,next){
         Promise.all([Menu.find({category:'side-dishes'}),Menu.count({category:'side-dishes'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/side-dishes"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/side-dishes");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
             )
     }
 
-    dinnerDetail(req,res,next){
+    sideDishesDetail(req,res,next){
         Menu.findOne({slug: req.params.slug})
             .then(detail => res.render('product_category/detail',{ 
                 detail : ToObject(detail)
@@ -248,27 +141,10 @@ class ProductsController{
     drink(req,res,next){
         Promise.all([Menu.find({category:'drink'}),Menu.count({category:'drink'})])
             .then(([item,count])=>{
-                let page = parseInt(req.query.page)||1;
-                const perPage = 8;
-                let totalPage = Math.floor(count/perPage) + 1;
-                let start = (page-1)*perPage;
-                let end;
-                if (page==totalPage){
-                    end = count;
-                }
-                else{
-                    end = start + perPage;
-                }
-                let totalPageArr = [];
-                for (let i=1;i<=totalPage;i++){
-                    totalPageArr.push({
-                        value : i,
-                        isCurrent: page === i,
-                        category:"/drink"
-                    });
-                }              
+                let items = ProductsService.viewItem(req.query.page,count,item);
+                let totalPageArr = ProductsService.paginationArray(req.query.page,count,"/drink");             
                 res.render('product_category/category',{
-                    item: ToArrObject(item).slice(start,end),
+                    item: items,
                     totalPageArr,
                 })
             }
