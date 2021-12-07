@@ -3,8 +3,13 @@ const Menu = require('../models/Menu');
 class SitesController{
 
     //get//new
-    home(req,res, next){
-        res.render('home');    
+    home(req,res, next){ 
+        const wrongPass = req.query['wrong-password'] !== undefined;
+        if(wrongPass){
+            res.render('home',{wrongPass}); 
+        }else{
+            res.render('home')
+        } 
     }
     
 

@@ -7,9 +7,9 @@ const passport = require('../config/passport');
 
 
 router.get('/sign-in',sitesController.in);
-router.post('/sign-in',passport.authenticate('local',
+router.post('/',passport.authenticate('local',
  { successRedirect: '/',
-failureRedirect: '/sign-in?wrong-password' }
+failureRedirect: '?wrong-password' }
 ));
 router.get('/logout',sitesController.logout);
 // router.get('/sign-up',sitesController.up);
