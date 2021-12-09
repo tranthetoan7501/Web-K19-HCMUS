@@ -1,7 +1,7 @@
 const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
-
+const User = require('../models/User');
 
 class AdminController{
     //get : create
@@ -62,6 +62,14 @@ class AdminController{
 
     viewAccount(req,res,next){
         res.render("admin/profile");
+    }
+    viewAllAccount(req,res,next){
+        User.find({role:"Admin"})
+            .then(user => res.render('admin/aa',{ 
+                user : ToArrObject(user)
+            }))
+            .catch(next);
+        
     }
 
 
