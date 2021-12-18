@@ -26,8 +26,8 @@
       <td>
         <form class="banform" method="get" action="">
             <input class="username" type="hidden" name="username" value="{{this.username}}">
-            <input class="option" type="hidden" name="option" value="{{compare this.ban}}">
-            <input type="submit" class="mini-btn" value="{{compare this.ban}}">
+            <input class="option" type="hidden" name="option" value="{{this.view}}">
+            <input type="submit" class="mini-btn" value="{{this.view}}">
         </form>
         <a href="" class="mini-btn" >Delete</a>
       </td>
@@ -39,7 +39,7 @@
 <script id="userAccounts-template" type="text/x-handlebars">
   \{{#each user}}
     <tr>
-      <td>\{{sum @index 1}}</td>
+      <td>\{{index}}</td>
       <td>\{{this.name}}</td>
       <td>\{{this.username}}</td>
       <td>\{{this.role}}</td>
@@ -48,8 +48,8 @@
       <td>
         <form class="banform" method="get" action="">
             <input class="username" type="hidden" name="username" value="\{{this.username}}">
-            <input class="option" type="hidden" name="option" value="\{{compare this.ban}}">
-            <input type="submit" class="mini-btn" value="\{{compare this.ban}}">
+            <input class="option" type="hidden" name="option" value="\{{this.view}}">
+            <input type="submit" class="mini-btn" value="\{{this.view}}">
         </form>
         <a href="" class="mini-btn" >Delete</a>
       </td>

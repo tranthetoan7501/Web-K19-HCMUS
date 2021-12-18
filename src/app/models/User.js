@@ -12,6 +12,7 @@ const User = new Schema({
     image: {type:String},
     role: {type:String},
     ban:{type:Boolean},
+    view:{type:String}
 });
 
 

@@ -25,9 +25,11 @@ exports.updateUserAccount = async (req,res)=>{
     let thisUser = await User.findOne({username:req.params.name}).lean();
     if(req.query.option==='Ban'){ 
         thisUser.ban = true;
+        thisUser.view='Unban';
     }
     if(req.query.option==='Unban'){
         thisUser.ban = false;
+        thisUser.view = 'Ban';
     }
     const update = await User.updateOne({username:req.params.name},thisUser);
     const user = await User.find({role: { $ne: "Admin" }}).lean();
