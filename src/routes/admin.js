@@ -12,6 +12,7 @@ router.get('/create',loggedInGuard,adminController.create);
 router.post('/store',loggedInGuard,adminController.store);
 router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
+router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);
 
 //router.get('/',sitesController.home);
 router.get('/profile',loggedInGuard,adminController.viewAccount);

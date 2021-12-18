@@ -53,6 +53,7 @@ class AdminController{
             .then(()=>res.redirect('/admin/storedItems'))
             .catch(next);
     }
+
     //delete admin/:id/delete
     delete(req,res,next){
         Menu.deleteOne({id:req.params.id})
@@ -63,9 +64,18 @@ class AdminController{
     viewAccount(req,res,next){
         res.render("admin/profile");
     }
+
     viewAllAccount(req,res,next){
         User.find({role:"Admin"})
-            .then(user => res.render('admin/aa',{ 
+            .then(user => res.render('admin/adminAccounts',{ 
+                user : ToArrObject(user)
+            }))
+            .catch(next);
+        
+    }
+    viewAllUserAccounts(req,res,next){
+        User.find({role: { $ne: "Admin" }})
+            .then(user => res.render('admin/userAccounts',{ 
                 user : ToArrObject(user)
             }))
             .catch(next);

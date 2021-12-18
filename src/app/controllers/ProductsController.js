@@ -1,5 +1,6 @@
 const Menu = require('../models/Menu');
 const { ToObject } = require('../../util/mongoose');
+const { ToArrObject } = require('../../util/mongoose');
 const ProductsService = require('../service/productsService');
 
 function escapeRegex(text) {

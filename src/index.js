@@ -27,15 +27,23 @@ app.use(function (req,res,next){
   res.locals.user = req.user;
   next();
 })
+
 app.engine('.hbs', 
   handlebars({
     extname: '.hbs',
     helpers: {
       standardDate: (a)=> a.toString().slice(0,16),
       sum: (a,b)=> a+b,
+      compare: (a)=>{
+        if(a===true){
+          return "Unban";
+        }
+        return "Ban";
+      }
     }
   }),
 );
+
 app.set('view engine', '.hbs');
 
 app.set('views', path.join(__dirname,'resource/views'));

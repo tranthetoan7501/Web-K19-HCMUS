@@ -7,14 +7,7 @@ document.querySelector('#search-btn').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-let cart = document.querySelector('.shopping-cart-container');
 
-document.querySelector('#cart-btn').onclick = () =>{
-    // cart.classList.toggle('active');
-    searchForm.classList.remove('active');
-    // loginForm.classList.remove('active');
-    navbar.classList.remove('active');
-}
 
 let navbar = document.querySelector('.header .navbar');
 
@@ -61,3 +54,20 @@ window.onscroll = () =>{
 // }
 
 // window.addEventListener('resize', slideImage);
+
+$(document).on('click','table tbody .banform',function(event){
+    event.preventDefault();
+    let username = $(this).find('input.username').val();
+    let option = $(this).find('input.option').val()
+    console.log(username,"sdd",option);   
+    $.get(`/api/admin/updateAccount/${username}`,{
+        option: option,
+    },function(users){
+        console.log(users)
+        const commentTemplate = Handlebars.compile(
+        document.getElementById("userAccounts-template").innerHTML);
+        const commentHtml = commentTemplate(users);
+        console.log(commentHtml);
+        $('#tbody-userAccounts').html(commentHtml);
+    })  
+});
