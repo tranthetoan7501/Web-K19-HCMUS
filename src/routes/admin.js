@@ -10,6 +10,7 @@ router.put('/:id/storeUpdate',loggedInGuard,adminController.storeUpdate);
 router.delete('/:id/delete',loggedInGuard,adminController.delete);
 router.get('/create',loggedInGuard,adminController.create);
 router.post('/store',loggedInGuard,adminController.store);
+
 router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
 router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);

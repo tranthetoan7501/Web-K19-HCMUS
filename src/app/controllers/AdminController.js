@@ -29,13 +29,46 @@ class AdminController{
     }
 
     storedItems(req,res,next){
-        Menu.find({})
-            .then(item => res.render('admin/storedItems',{ 
-                item : ToArrObject(item)
-            }))
-            .catch(next);
-        
+        console.log(req.query)
+        if (req.query.order && req.query.category && req.query.type) {
+            let type;
+            if (req.query.order == "asc") {
+                if (req.query.type === "price") {
+                    type = { new_price: 1, price: 1 }
+                }
+                else if (req.query.type === "rating") {
+                    type = { rating: 1, num_rating:1}
+                }
+                Menu.find({ category: [req.query.category] }).sort(type)
+                    .then(item => res.render('admin/storedItems', {
+                        item: ToArrObject(item)
+                    }))
+                    .catch(next);
+
+            }
+            else if (req.query.order == "dsc") {
+                if (req.query.type === "price") {
+                    type = { new_price: -1, price: -1 }
+                }
+                else if (req.query.type === "rating") {
+                    type = { rating: -1, num_rating: -1}
+                }
+                Menu.find({ category: [req.query.category] }).sort(type)
+                    .then(item => res.render('admin/storedItems', {
+                        item: ToArrObject(item)
+                    }))
+                    .catch(next);
+            }
+        }
+        else {
+            Menu.find({})
+                .then(item => res.render('admin/storedItems', {
+                    item: ToArrObject(item)
+                }))
+                .catch(next);
+        }
     }
+
     update(req,res,next){
         Menu.findOne({id:req.params.id})
             .then(item => res.render('admin/update',{ 
