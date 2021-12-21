@@ -29,7 +29,7 @@ class AdminController{
     }
 
     storedItems(req,res,next){
-        console.log(req.query)
+        // console.log(req.query)
         if (req.query.order && req.query.category && req.query.type) {
             let type;
             if (req.query.order == "asc") {
@@ -115,6 +115,10 @@ class AdminController{
         
     }
 
+    viewStatistic(req,res,next){
+        
+        res.render("admin/statistic");
+    }
 
 }
 module.exports = new AdminController;
