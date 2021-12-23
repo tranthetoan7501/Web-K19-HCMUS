@@ -27,7 +27,13 @@
         <form class="banform" method="get" action="">
             <input class="username" type="hidden" name="username" value="{{this.username}}">
             <input class="option" type="hidden" name="option" value="{{this.view}}">
-            <input type="submit" class="mini-btn" value="{{this.view}}">
+            {{#if this.ban}}
+            <input class="option" type="hidden" name="option" value="Unban">
+            <input type="submit" class="mini-btn" value="Unban">
+            {{else}}
+            <input class="option" type="hidden" name="option" value="Ban">
+            <input type="submit" class="mini-btn" value="Ban">
+            {{/if}}
         </form>
         <a href="" class="mini-btn" >Delete</a>
       </td>
@@ -48,8 +54,14 @@
       <td>
         <form class="banform" method="get" action="">
             <input class="username" type="hidden" name="username" value="\{{this.username}}">
-            <input class="option" type="hidden" name="option" value="\{{this.view}}">
-            <input type="submit" class="mini-btn" value="\{{this.view}}">
+            
+            \{{#if this.ban}}
+            <input class="option" type="hidden" name="option" value="Unban">
+            <input type="submit" class="mini-btn" value="Unban">
+            \{{else}}
+            <input class="option" type="hidden" name="option" value="Ban">
+            <input type="submit" class="mini-btn" value="Ban">
+            \{{/if}}
         </form>
         <a href="" class="mini-btn" >Delete</a>
       </td>

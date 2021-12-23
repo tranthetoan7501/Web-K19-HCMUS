@@ -12,8 +12,7 @@ const User = new Schema({
     dateOfBirth: {type: Date},
     image: {type:String},
     role: {type:String},
-    ban:{type:Boolean},
-    view:{type:String}
+    ban:{type:Boolean}
 });
 
 
