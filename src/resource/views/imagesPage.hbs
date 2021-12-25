@@ -36,35 +36,14 @@
 
 	<hr>
 
-	<h1>Uploaded Images</h1>
-	<div>
-		<% items.forEach(function(image) { %>
-		<div>
-			<div>
-				<img src="data:image/<%=image.img.contentType%>;base64,
-					<%=image.img.data.toString('base64')%>">
-				<div>
-					<h5><%= image.name %></h5>
-
-<p><%= image.desc %></p>
-
-				</div>
-			</div>
-		</div>
-		<% }) %>
-	</div>
-
     	<div>
 		{{#each items}}
 		<div>
 			<div>
-				<img src="data:image/<%=image.img.contentType%>;base64,
-					<%=image.img.data.toString('base64')%>">
+				<img style="max-width: 15rem;height: auto;border-radius:5%" src="data:image/{{this.img.contentType}};base64,{{ToString this.img.data}}">
 				<div>
 					<h5>{{this.name}}</h5>
-
-<p>{{this.desc}}</p>
-
+					<p>data:image/{{this.img.contentType}};base64,{{ToString this.img.data}}<p>
 				</div>
 			</div>
 		</div>

@@ -37,16 +37,10 @@ var storage = multer.diskStorage({
  
 var upload = multer({ storage: storage });
 
-app.get('/upload', (req, res) => {
-  imgModel.find({}, (err, items) => {
-      if (err) {
-          console.log(err);
-          res.status(500).send('An error occurred', err);
-      }
-      else {
-          res.render('imagesPage', { items: items });
-      }
-  });
+app.get('/upload',async (req, res) => {
+
+  const items = await imgModel.find({}).lean();
+  res.render('imagesPage', { items: items });
 });
 // Step 8 - the POST handler for processing the uploaded file
 
@@ -104,12 +98,7 @@ app.engine('.hbs',
     helpers: {
       standardDate: (a)=> a.toString().slice(0,16),
       sum: (a,b)=> a+b,
-      compare: (a)=>{
-        if(a===true){
-          return "Unban";
-        }
-        return "Ban";
-      }
+      ToString: (b)=> b.toString('base64'),
     }
   }),
 );
