@@ -6,7 +6,7 @@ const Menu = new Schema({
     id:{ type: Number},
     category:{ type: String, maxlength:50 },
     name:{ type: String, maxlength:100  },
-    image:{ type: String, maxlength:600 },
+    image:{ type: String},
     old_price:{ type: Number},
     new_price:{ type: Number},
     rating:{ type: Number },

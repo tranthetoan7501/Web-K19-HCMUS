@@ -2,6 +2,10 @@ const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
 const User = require('../models/User');
+const fs = require('fs');
+
+const path = require('path');
+
 
 class AdminController{
     //get : create
@@ -15,12 +19,13 @@ class AdminController{
             .sort('-id')
             .then((item) => {
                 var newId = item.id + 1;
-                const newItem = req.body;
+                var newItem = req.body;
                 let mySlug = req.body.name;
                 newItem.slug = mySlug.replace(/ /g,'-') + "-" + newId;
                 newItem.rating = 0.0;
                 newItem.id = newId;
                 newItem.num_rating=0;
+                newItem.image = "data:image/image/png;base64,"+fs.readFileSync(path.join(__dirname + '../../../public/image/' + req.file.filename)).toString('base64');
                 const menu = new Menu(newItem);
                 return menu.save();
             })
@@ -44,7 +49,6 @@ class AdminController{
                         item: ToArrObject(item)
                     }))
                     .catch(next);
-
             }
             else if (req.query.order == "dsc") {
                 if (req.query.type === "price") {
