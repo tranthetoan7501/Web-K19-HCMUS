@@ -23,8 +23,8 @@ router.delete('/:id/delete',loggedInGuard,adminController.delete);
 router.get('/create',loggedInGuard,adminController.create);
 router.post('/store',upload.single('image'),loggedInGuard,adminController.store);
 
-
-router.get('/statistic', loggedInGuard, adminController.viewStatistic);
+router.get('/trending', loggedInGuard, adminController.getTrending);
+router.get('/statistic', loggedInGuard, adminController.getStatistic);
 router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
 router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);

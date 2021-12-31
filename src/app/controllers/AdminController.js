@@ -3,6 +3,7 @@ const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
 const User = require('../models/User');
 const Turnover = require('../models/Turnover');
+const Order = require('../models/Order');
 const fs = require('fs');
 
 const path = require('path');
@@ -120,7 +121,7 @@ class AdminController{
         
     }
 
-    viewStatistic(req, res, next) {
+    getStatistic(req, res, next) {
         Promise.all([Turnover.find({}).lean()])
             .then(([dataset]) => {
                 var xValues = [];
@@ -137,9 +138,39 @@ class AdminController{
                     yValues: yValues
                 })
             }
-            )
-
+        )
     }
+
+    getTrending(req, res, next) {
+        Promise.all([Order.find({}).lean()])
+            .then(([dataset]) => {
+                var productList = [];
+                var productName, index;
+                
+                for (var i in dataset) {
+                    // console.log(dataset[i].ite   ms);
+                    for (var j in dataset[i].items) {
+                        productName = dataset[i].items[j].productName;
+                        index = productList.indexOf(productName)
+                        if (index === -1) {
+                            productList.push([ productName, 1 ]);
+                        } else {
+                            productList[index][1]++;
+                        }
+                    }
+                }
+
+                productList.sort((a, b) => (a.count < b.count) ? 1 : -1)
+
+
+                console.log(productList);    
+                res.render("admin/trending", {
+                    topProducts: productList
+                })
+            }
+        )
+    }
+
 
 }
 module.exports = new AdminController;
