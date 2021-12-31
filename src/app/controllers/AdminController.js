@@ -2,6 +2,7 @@ const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
 const User = require('../models/User');
+const Turnover = require('../models/Turnover');
 const fs = require('fs');
 
 const path = require('path');
@@ -119,9 +120,25 @@ class AdminController{
         
     }
 
-    viewStatistic(req,res,next){
-        
-        res.render("admin/statistic");
+    viewStatistic(req, res, next) {
+        Promise.all([Turnover.find({}).lean()])
+            .then(([dataset]) => {
+                var xValues = [];
+                var yValues = [];
+
+                for (var i in dataset) {
+                    xValues.push(dataset[i].time);
+                    yValues.push(dataset[i].turnover);
+                }
+                // console.log(xValues, yValues);
+
+                res.render("admin/statistic", {
+                    xValues: xValues,
+                    yValues: yValues
+                })
+            }
+            )
+
     }
 
 }
