@@ -29,6 +29,8 @@ router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
 router.get('/userAccounts/view',loggedInGuard,adminController.viewUserAccount);
 router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);
+router.get('/update-account',adminController.updateAccount);
+router.put('/storeUpdate',adminController.storeUpdateAccount);
 
 //router.get('/',sitesController.home);
 router.get('/profile',loggedInGuard,adminController.viewAccount);

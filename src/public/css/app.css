@@ -851,6 +851,21 @@ table,th,td{
   cursor: pointer;
   width: 100%;
 }
+.account{
+  padding: 2rem;
+  padding-top:4rem;
+  top: 8.5rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  margin: 5rem auto;
+  max-width: 100rem;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: .5rem;
+  animation: fadeUp .4s linear;
+}
 
 .form_btn:hover {
   opacity: 0.8;

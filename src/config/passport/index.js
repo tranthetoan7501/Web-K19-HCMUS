@@ -21,12 +21,11 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, user.username);
-  });
-  
-  passport.deserializeUser(async function(username, done) {
-    const user = await userService.findByUsername(username);
-   done(null,user);
-  });
+  done(null, {id:user._id, name:user.name,username: user.username, email:user.email,phoneNumber:user.phoneNumber,dateOfBirth:user.dateOfBirth,image:user.image,role:user.role, ban: user.ban});
+});
+
+passport.deserializeUser(async function(user, done) {
+done(null,user);
+});
 
 module.exports = passport;

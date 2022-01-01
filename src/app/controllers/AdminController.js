@@ -129,6 +129,31 @@ class AdminController{
             clientUser:clientUser
         });
     }
+    updateAccount(req,res,next){
+        res.render("admin/updateAccount");
+    }
+    async storeUpdateAccount(req,res,next){
+        const username = req.session.passport.user.username;
+        console.log(username);
+        let userInfo = await User.findOne({username:username}).lean();
+
+        console.log(userInfo);
+        userInfo.name = req.body.name;
+        req.session.passport.user.name = req.body.name;
+
+        userInfo.dateOfBirth = req.body.dateOfBirth;
+        req.session.passport.user.dateOfBirth = req.body.dateOfBirth;
+
+        userInfo.phoneNumber = req.body.phoneNumber;
+        req.session.passport.user.phoneNumber = req.body.phoneNumber;
+
+        userInfo.image = req.body.image;
+        req.session.passport.user.image = req.body.image;
+
+        User.updateOne({username:username},userInfo)
+            .then(()=>res.redirect('/admin/profile'))
+            .catch(next);
+    }
 
     getStatistic(req, res, next) {
         Promise.all([Turnover.find({}).lean()])
