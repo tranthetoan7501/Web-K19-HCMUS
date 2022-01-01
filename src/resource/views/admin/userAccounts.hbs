@@ -8,7 +8,7 @@
       <th scope="col">Role</th>
       <th scope="col">Email</th>
       <th scope="col">Phone Number</th>
-      <th scope="col">Date of birth</th>
+      <th scope="col">Option</th>
       {{!-- <th scope="col">Role</th> --}}
     </tr>
   </thead>
@@ -34,6 +34,10 @@
             <input class="option" type="hidden" name="option" value="Ban">
             <input type="submit" class="mini-btn" value="Ban">
             {{/if}}
+        </form>
+        <form method="get" action="/admin/userAccounts/view">
+        <input type="hidden" name="username" value="{{this.username}}">
+          <input type="submit" class="mini-btn" value="View AccountS">
         </form>
         
       </td>
@@ -62,6 +66,10 @@
             <input class="option" type="hidden" name="option" value="Ban">
             <input type="submit" class="mini-btn" value="Ban">
             \{{/if}}
+        </form>
+        <form method="get" action="/admin/userAccounts/view">
+          <input type="hidden" name="username" value="{{this.username}}">
+          <input type="submit" class="mini-btn" value="View AccountS">
         </form>
         
       </td>

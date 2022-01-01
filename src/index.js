@@ -14,7 +14,7 @@ app.use(express.urlencoded({limit: '50mb'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3200
 // const url = "https://hcmus-web-2021.herokuapp.com/";
 
 const route = require("./routes/index");
@@ -40,6 +40,11 @@ app.engine('.hbs',
       standardDate: (a)=> a.toString().slice(0,16),
       sum: (a,b)=> a+b,
       ToString: (b)=> b.toString('base64'),
+      standardDateOfBirth: (a)=>{
+        let date = a.toString();
+        let position = date.search(":");
+        return date.slice(0,position-2);
+      }
     }
   }),
 );

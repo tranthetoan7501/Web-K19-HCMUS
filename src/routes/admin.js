@@ -27,6 +27,7 @@ router.get('/trending', loggedInGuard, adminController.getTrending);
 router.get('/statistic', loggedInGuard, adminController.getStatistic);
 router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
+router.get('/userAccounts/view',loggedInGuard,adminController.viewUserAccount);
 router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);
 
 //router.get('/',sitesController.home);

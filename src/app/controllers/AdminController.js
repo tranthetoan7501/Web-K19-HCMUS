@@ -121,6 +121,15 @@ class AdminController{
         
     }
 
+    async viewUserAccount(req,res){
+        
+        let clientUser =await User.findOne({username:req.query.username}).lean();
+        console.log(clientUser.username);
+        res.render('admin/profile',{
+            clientUser:clientUser
+        });
+    }
+
     getStatistic(req, res, next) {
         Promise.all([Turnover.find({}).lean()])
             .then(([dataset]) => {
