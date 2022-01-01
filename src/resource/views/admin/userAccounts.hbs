@@ -2,7 +2,7 @@
 <table style="font-size:15px; width:100%" class="">
   <thead>
     <tr>
-      <th scope="col">ID</th>
+      <th scope="col"></th>
       <th scope="col">Name</th>
       <th scope="col">Username</th>
       <th scope="col">Role</th>
@@ -17,7 +17,9 @@
     <tr>
       
       {{!-- <th scope="row"><a class="mini-btn" href="/product/{{this.category}}/{{this.slug}}">{{sum @index 1}}</a></th> --}}
-      <td>{{this._id}}</td>
+      <td>
+        <img class="mini-img" src="{{this.image}}" alt="">
+      </td>
       <td>{{this.name}}</td>
       <td>{{this.username}}</td>
       <td>{{this.role}}</td>
