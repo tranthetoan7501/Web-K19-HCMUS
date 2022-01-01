@@ -165,7 +165,7 @@ class AdminController{
 
                 console.log(productList);    
                 res.render("admin/trending", {
-                    topProducts: productList
+                    topProducts: productList.slice(0, 10)
                 })
             }
         )

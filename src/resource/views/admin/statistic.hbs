@@ -3,8 +3,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-<div>
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+<div class="graph">
+    <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
     <div class="xValues" style="display:none;" > {{xValues}} </div>
     <div class="yValues" style="display:none;"> {{yValues}} </div>
 
@@ -29,7 +29,7 @@
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: "World Wine Production 2018"
+                    text: "turnover month,day,year..."
                 }
             }
         });
