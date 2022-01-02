@@ -3,37 +3,28 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-<div class="graph">
-    <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
-    <div class="xValues" style="display:none;" > {{xValues}} </div>
-    <div class="yValues" style="display:none;"> {{yValues}} </div>
-
-    <script>
-        var xValues = document.getElementsByClassName("xValues")[0].innerText.split(",");
-        var yValues = document.getElementsByClassName("yValues")[0].innerText.split(",");
-        var barColors = ["red", "green", "blue", "orange", "brown"];
-        
-        console.log("x", xValues);
-        console.log("y", yValues);
-
-        new Chart("myChart", {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: "turnover month,day,year..."
-                }
-            }
-        });
-    </script>
+<div class="select-form">
+    <form action="" method="get">
+        <div>
+            <label class="select-text" for="bday-month">Timeline: </label>
+            <input class="select-text" id="bday-month" type="month" name="month-year" value="2001-06">
+            <button class="select-button"> submit </button>
+        </div>
+    </form>
 </div>
+
+<div class="select-form">
+    <form action="" method="get">
+        <div>
+            <label class="select-text" for="year">Timeline: </label>
+            <input class="select-text year-text" type="number" min="2020" max="3000" step="1" value="2022" />
+            <button class="select-button year-button"> submit </button>
+        </div>
+    </form>
+
+
+</div>
+
+
 
 

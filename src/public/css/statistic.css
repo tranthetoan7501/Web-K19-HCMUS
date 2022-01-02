@@ -3,11 +3,62 @@
 .graph {
 	margin-top: 50px;
 	margin-bottom: 100px;
-	margin-left: 400px;
+	margin-left: 200px;
   	font:normal 100%/150% arial,helvetica,sans-serif;
+
 }
 
 #container {
-	width:1000px;
-	height:600px;
+	width:1500px;
+	height:750px;
+}
+
+.select-form {
+	margin: auto;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-bottom: 30px;
+}
+
+.select-form {
+	width: 400px;
+	border: 1px solid green;
+  	padding: 10px;
+}
+
+.select-text {
+	font-size: 15px;
+	text-align: center;
+}
+
+.select-button {
+	background-color: #4CAF50; /* Green */
+	color: white;
+	display: inline-block;
+}
+
+.select-button {
+	border: none;
+	padding: 1px 10px;
+}
+
+.select-button {
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.select-button {
+	margin-left: 35px;
+	text-align: right;
+}
+
+.year-text {
+	font-size: 15px;
+	text-align: right;
+}
+
+.year-button {
+	margin-left: 145px;
+	
 }

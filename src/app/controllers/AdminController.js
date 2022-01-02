@@ -2,7 +2,7 @@ const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
 const { ToObject } = require('../../util/mongoose');
 const User = require('../models/User');
-const Turnover = require('../models/Turnover');
+
 const Order = require('../models/Order');
 const fs = require('fs');
 const userService = require('../service/userService')
@@ -157,23 +157,7 @@ class AdminController{
     }
 
     getStatistic(req, res, next) {
-        Promise.all([Turnover.find({}).lean()])
-            .then(([dataset]) => {
-                var xValues = [];
-                var yValues = [];
-
-                for (var i in dataset) {
-                    xValues.push(dataset[i].time);
-                    yValues.push(dataset[i].turnover);
-                }
-                // console.log(xValues, yValues);
-
-                res.render("admin/statistic", {
-                    xValues: xValues,
-                    yValues: yValues
-                })
-            }
-        )
+        res.render("admin/statistic")
     }
 
     getTrending(req, res, next) {
@@ -183,22 +167,25 @@ class AdminController{
                 var productName, index;
                 
                 for (var i in dataset) {
-                    // console.log(dataset[i].ite   ms);
                     for (var j in dataset[i].items) {
                         productName = dataset[i].items[j].productName;
-                        index = productList.indexOf(productName)
-                        if (index === -1) {
-                            productList.push([ productName, 1 ]);
+                        index = productList.findIndex((obj => obj.productName === productName));
+
+                        if (index != -1) {
+                            productList[index].count++;
                         } else {
-                            productList[index][1]++;
+                            productList.push({ productName: productName, count: 1})
                         }
                     }
                 }
 
                 productList.sort((a, b) => (a.count < b.count) ? 1 : -1)
 
+                for (var i in productList) {
+                    productList[i] = Object.values(productList[i]);
+                }
 
-                console.log(productList);    
+                console.log(productList.slice(0, 10));    
                 res.render("admin/trending", {
                     topProducts: productList.slice(0, 10)
                 })
