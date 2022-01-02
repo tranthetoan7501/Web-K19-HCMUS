@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Turnover = require('../models/Turnover');
 const Order = require('../models/Order');
 const fs = require('fs');
+const userService = require('../service/userService')
 
 const path = require('path');
 
@@ -205,6 +206,18 @@ class AdminController{
         )
     }
 
+    changePassword(req,res){
+        res.render("admin/changePassword");
+    }
+
+    async postChangePassword(req,res){
+        const {oldpassword, password, confirmPassword} = req.body;
+        const result = await userService.changePassword(req.user.username,oldpassword,password,confirmPassword)
+        if(result !== "Success"){
+            return res.render("admin/changePassword",{result});
+        }
+        return res.redirect("/admin/profile")
+    }
 
 }
 module.exports = new AdminController;

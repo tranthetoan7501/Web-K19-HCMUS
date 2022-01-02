@@ -54,3 +54,29 @@ exports.register = async (name,username,password,email,phoneNumber,dateOfBirth) 
         role: "Admin"
     });
 }
+
+exports.reset = async(email,password) => {
+    const pwdHashed = await bcrypt.hash(password,10);
+    const user = await User.findOne({email}).lean();
+    if(!user){
+        return false;
+    }
+    await User.updateOne({
+        email
+    },{
+        $set: {
+            password: pwdHashed
+        }
+    });
+    return true;
+}
+
+exports.changePassword = async(username,oldpassword,password,confirmPassword) =>{
+    const user = await this.findByUsername(username);
+    const check = await this.validPassword(oldpassword,user);
+    if(check === false) return "Wrong old password."
+    if(password !== confirmPassword) return "Wrong confirm password."
+    await this.reset(user.email,confirmPassword);
+    return "Success"
+}
+
