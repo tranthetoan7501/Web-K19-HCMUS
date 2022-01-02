@@ -9,6 +9,8 @@ const userService = require('../service/userService')
 
 const path = require('path');
 
+const adminService = require('../service/adminService');
+
 
 class AdminController{
     //get : create
@@ -36,44 +38,9 @@ class AdminController{
             .catch(next);
     }
 
-    storedItems(req,res,next){
-        // console.log(req.query)
-        if (req.query.order && req.query.category && req.query.type) {
-            let type;
-            if (req.query.order == "asc") {
-                if (req.query.type === "price") {
-                    type = { new_price: 1, price: 1 }
-                }
-                else if (req.query.type === "rating") {
-                    type = { rating: 1, num_rating:1}
-                }
-                Menu.find({ category: [req.query.category] }).sort(type)
-                    .then(item => res.render('admin/storedItems', {
-                        item: ToArrObject(item)
-                    }))
-                    .catch(next);
-            }
-            else if (req.query.order == "dsc") {
-                if (req.query.type === "price") {
-                    type = { new_price: -1, price: -1 }
-                }
-                else if (req.query.type === "rating") {
-                    type = { rating: -1, num_rating: -1}
-                }
-                Menu.find({ category: [req.query.category] }).sort(type)
-                    .then(item => res.render('admin/storedItems', {
-                        item: ToArrObject(item)
-                    }))
-                    .catch(next);
-            }
-        }
-        else {
-            Menu.find({})
-                .then(item => res.render('admin/storedItems', {
-                    item: ToArrObject(item)
-                }))
-                .catch(next);
-        }
+    async storedItems(req,res,next){
+        const itemAndpagination =await adminService.itemAndPagiantion(req,res,next);
+        res.render('admin/storedItems',itemAndpagination);
     }
 
     update(req,res,next){

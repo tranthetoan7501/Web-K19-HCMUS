@@ -69,6 +69,30 @@
   </tbody>
 </table>
 
+
+
+<nav style="margin-top: 4em;" aria-label="...">
+    <ul class="pagination pagination-lg justify-content-center"">
+        {{#each totalPageArr}}
+            {{#if this.isCurrent}}
+                <li class="page-item active"><a class="page-link" href="/admin/storedItems?page={{this.value}}">{{this.value}}</a></li>
+            {{else}}
+                <li class="page-item"><a class="page-link" href="/admin/storedItems?page={{this.value}}">{{this.value}}</a></li>
+            {{/if}}
+        {{/each}} 
+
+        {{#each totalPageArrFilter}}
+            {{#if this.isCurrent}}
+                <li class="page-item active"><a class="page-link" 
+                href="/admin/storedItems?category={{this.category}}&type={{this.type}}&order={{this.order}}&page={{this.value}}">{{this.value}}</a></li>
+            {{else}}
+                <li class="page-item"><a class="page-link" 
+                href="/admin/storedItems?category={{this.category}}&type={{this.type}}&order={{this.order}}&page={{this.value}}">{{this.value}}</a></li>
+            {{/if}}
+        {{/each}}
+    </ul>
+</nav>
+
 <!-- Modal -->
 <div style="z-index: 2000;" class="modal fade" id="deleteButton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
