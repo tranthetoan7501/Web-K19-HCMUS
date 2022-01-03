@@ -1,7 +1,9 @@
 const Menu = require('../models/Menu');
 const { ToArrObject } = require('../../util/mongoose');
+const User = require('../models/User');
 
-const perPage = 25;
+const perPage = 15;
+
 class adminService{
     viewItem(pageRequest,numItem,items){
         let page = parseInt(pageRequest)||1;   
@@ -32,6 +34,7 @@ class adminService{
             } 
         return totalPageArr;    
     }
+
     paginationArrayFilter(pageRequest,numItem,slug,type,order){
         if(numItem<=perPage){
             return null;
@@ -91,8 +94,23 @@ class adminService{
         }
 
     }
+    async accountAndPagination(req,res,next){
+            const users =ToArrObject( await User.find({role: { $ne: "Admin" }}));
+            const count = users.length;
 
-    
+            let user= this.viewItem(req.query.page,count,users);
+            let totalPageArr = this.paginationArray(req.query.page,count,"");
+            return {user,totalPageArr}
+    }
+
+    async adminAndPagination(req,res,next){
+        const users =ToArrObject( await User.find({role: "Admin" }));
+        const count = users.length;
+
+        let user= this.viewItem(req.query.page,count,users);
+        let totalPageArr = this.paginationArray(req.query.page,count,"");
+        return {user,totalPageArr}
+}
 }
 
 module.exports = new adminService;

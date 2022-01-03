@@ -72,27 +72,24 @@ class AdminController{
         res.render("admin/profile");
     }
 
-    viewAllAccount(req,res,next){
-        User.find({role:"Admin"})
-            .then(user => res.render('admin/adminAccounts',{ 
-                user : ToArrObject(user)
-            }))
-            .catch(next);
+    async viewAllAccount(req,res,next){
+        let adminAndPagination = await adminService.adminAndPagination(req,res,next);
+        res.render('admin/adminAccounts',
+            adminAndPagination
+        );
         
     }
-    viewAllUserAccounts(req,res,next){
-        User.find({role: { $ne: "Admin" }})
-            .then(user => res.render('admin/userAccounts',{ 
-                user : ToArrObject(user)
-            }))
-            .catch(next);
+    async viewAllUserAccounts(req,res,next){       
+        let accountAndPagiantion = await adminService.accountAndPagination(req,res,next);
+        res.render('admin/userAccounts',
+            accountAndPagiantion
+        );
         
     }
 
     async viewUserAccount(req,res){
         
         let clientUser =await User.findOne({username:req.query.username}).lean();
-        // console.log(clientUser.username);
         res.render('admin/profile',{
             clientUser:clientUser
         });
