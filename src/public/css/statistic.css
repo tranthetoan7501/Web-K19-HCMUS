@@ -3,14 +3,14 @@
 .graph {
 	margin-top: 50px;
 	margin-bottom: 100px;
-	margin-left: 200px;
+	margin-left: 50px;
   	font:normal 100%/150% arial,helvetica,sans-serif;
 
 }
 
 #container {
-	width:1500px;
-	height:750px;
+	width:1400px;
+	height:900px;
 }
 
 .select-form {
@@ -42,23 +42,55 @@
 	padding: 1px 10px;
 }
 
+
+
 .select-button {
-	text-align: center;
 	text-decoration: none;
 	font-size: 16px;
 }
 
 .select-button {
-	margin-left: 35px;
+	margin-left: 10px;
 	text-align: right;
 }
 
 .year-text {
 	font-size: 15px;
-	text-align: right;
+	margin-left: 10px;
+	border: 1px solid rgb(176, 228, 176);
+  	padding: 1px;
+}
+
+.year-month-text {
+	font-size: 15px;
+	margin-left: 10px;
+	border: 1px solid rgb(176, 228, 176);
+  	padding: 1px;
 }
 
 .year-button {
-	margin-left: 145px;
-	
+	margin-left: 70px;
+}
+
+.table-30days {
+	margin: auto;
+	margin-top: 20px;
+	margin-left: 200px;
+	margin-bottom: 30px;
+}
+
+.total {
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+.quarter-table {
+	margin:auto;
+	font-size:15px; 
+	width:700px;	
+	margin-top: 40px;
+}
+
+table, th, td {
+  border: 1px solid rgb(25, 88, 25);
 }

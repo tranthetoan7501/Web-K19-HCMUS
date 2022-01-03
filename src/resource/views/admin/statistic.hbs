@@ -1,29 +1,79 @@
 <link rel="stylesheet" href="/css/statistic.css">
 {{!-- <script src="test.js"></script> --}}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-<div class="select-form">
-    <form action="" method="get">
+<div >
+    <form action="" method="get" class="select-form">
         <div>
-            <label class="select-text" for="bday-month">Timeline: </label>
-            <input class="select-text" id="bday-month" type="month" name="month-year" value="2001-06">
-            <button class="select-button"> submit </button>
+            <label class="select-text" for="bday-month">All days of : </label>
+            <input class="select-text year-month-text" id="bday-month" type="month" name="year_month" value="2022-01">
+            <button class="select-button"> Show </button>
+        </div>
+    </form>
+    <form action="" method="get" class="select-form">
+            <label class="select-text" for="year">12 Months of year: </label>
+            <input class="select-text year-text" type="number" min="2020" max="3000" step="1" name="year" value="2022" />
+            <button class="select-button year-button"> Show </button>
         </div>
     </form>
 </div>
-
-<div class="select-form">
-    <form action="" method="get">
+<div>
+    <head>
+        <title>Turnover of timeline</title>
+        <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.7.1/themes/dark_turquoise.min.js"></script>
+    </head>
+    <div class="graph">
+        <div id="container"></div>
+        <div class="turnover" style="display:none;"> {{turnover}} </div>
+        <script>
+            anychart.onDocumentReady(function () {
+                var rawValues = document.getElementsByClassName("turnover").item(0).innerHTML.split(',');
+                var turnovers = [];
+                for (var i = 0; i < rawValues.length; i += 2) {
+                    turnovers.push([rawValues[i], rawValues[i + 1]])
+                }
+                var data = {
+                    header: ["Time", "Turnover"],
+                    rows: turnovers
+                };
+                var chart = anychart.bar();
+                anychart.theme(anychart.themes.darkBlue);
+                chart.data(data);
+                title = chart.title("Turnover of timeline");
+                chart.yScale().ticks().interval(10);
+                chart.yScale().minorTicks().interval(1);
+                chart.yGrid().enabled(true);
+                chart.yMinorGrid().enabled(true);
+                chart.animation(true);
+                chart.container("container");
+                chart.draw();
+            });
+        </script>
+        <div class="total"> Total turnover of timeline: {{total}} </div>
         <div>
-            <label class="select-text" for="year">Timeline: </label>
-            <input class="select-text year-text" type="number" min="2020" max="3000" step="1" value="2022" />
-            <button class="select-button year-button"> submit </button>
+            <table class="quarter-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Quarter of the year</th>
+                        <th scope="col">Turnover of quarter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each quarter_turnover}}
+                    <tr>
+                        <td>{{this.quarter}}</td>
+                        <td>{{this.turnover}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>     
         </div>
-    </form>
-
-
+    </div>
 </div>
+
+
+
 
 
 

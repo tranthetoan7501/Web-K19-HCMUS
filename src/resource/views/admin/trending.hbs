@@ -5,12 +5,10 @@
         <title>Top 10 best selling product</title>
         <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js"></script>
         <script src="https://cdn.anychart.com/releases/8.7.1/themes/dark_turquoise.min.js"></script>
-    </head>
-    
+    </head>  
     <div class="graph">
         <div id="container"></div>
         <div class="topProducts" style="display:none;"> {{topProducts}} </div>
-
         <script>
             anychart.onDocumentReady(function () {
                 var rawValues = document.getElementsByClassName("topProducts").item(0).innerHTML.split(',');
@@ -19,45 +17,23 @@
                 for (var i = 0; i < rawValues.length; i+=2) {
                     topProducts.push( [rawValues[i], rawValues[i + 1]] )
                 }
-
-                console.log("row_values:", rawValues);
-                console.log("topProducts:", topProducts);
-                // create the data
                 var data = {
                     header: ["Product name", "Product count"],
                     rows: topProducts
                 };
 
-                // create the chart
                 var chart = anychart.bar();
-
-                // set the theme
                 anychart.theme(anychart.themes.darkBlue);
-
-                // add the data
                 chart.data(data);
-
-                // set the chart title
                 title = chart.title("Top 10 best selling product");
-                // add tick intervals
                 chart.yScale().ticks().interval(10);
                 chart.yScale().minorTicks().interval(1);
-                // add grid lines
                 chart.yGrid().enabled(true);
                 chart.yMinorGrid().enabled(true);
-
-                // turn on the chart animation
                 chart.animation(true);
-
-                // set the container
                 chart.container("container");
-
-                // draw the chart
                 chart.draw();
-
             });
         </script>
-    </body>
-    
-
+    </div>
 </div>

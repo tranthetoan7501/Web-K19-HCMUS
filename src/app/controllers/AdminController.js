@@ -92,7 +92,7 @@ class AdminController{
     async viewUserAccount(req,res){
         
         let clientUser =await User.findOne({username:req.query.username}).lean();
-        console.log(clientUser.username);
+        // console.log(clientUser.username);
         res.render('admin/profile',{
             clientUser:clientUser
         });
@@ -102,10 +102,10 @@ class AdminController{
     }
     async storeUpdateAccount(req,res,next){
         const username = req.session.passport.user.username;
-        console.log(username);
+        // console.log(username);
         let userInfo = await User.findOne({username:username}).lean();
 
-        console.log(userInfo);
+        // console.log(userInfo);
         userInfo.name = req.body.name;
         req.session.passport.user.name = req.body.name;
 
@@ -124,7 +124,99 @@ class AdminController{
     }
 
     getStatistic(req, res, next) {
-        res.render("admin/statistic")
+        if (req.query.year_month) {
+            var start = req.query.year_month + "-01";
+            var end = req.query.year_month + "-31";
+            var index, sum = 0;
+            var turnover = [];
+
+            for (var i = 1; i < 32; i++) {
+                turnover.push({ day: "Day " + i, turnover: 0 })
+            }
+
+            Promise.all([Order.find({
+                date: {
+                    "$gte": start,
+                    "$lt": end
+                }
+            }).lean()])
+                .then(([dataset]) => {
+                    // console.log(dataset)  
+                    for (var i in dataset) {
+                        var day = "Day " + dataset[i].date.getDate();
+                        index = turnover.findIndex((obj => obj.day == day));
+
+                        for (var j in dataset[i].items) {
+                            turnover[index].turnover += dataset[i].items[j].price
+                        }
+                    }
+
+                    for (var i in turnover) {
+                        turnover[i] = Object.values(turnover[i]);
+                        sum += turnover[i][1];
+                    }
+
+                    // console.log(turnover);
+                    // console.log(sum);
+
+                    res.render("admin/statistic", {
+                        turnover: turnover,
+                        total: sum
+                    })
+                }
+                )
+        } else if (req.query.year) {
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var start = req.query.year + "-01-01", end = req.query.year + "-12-31";
+            var index, sum = 0;
+            var quarter_turnover = [];
+            var turnover = [];
+
+            for (var i = 0; i < 12; i++) {
+                turnover.push({ month: months[i], turnover: 0 })
+            }
+
+            Promise.all([Order.find({
+                date: {
+                    "$gte": start,
+                    "$lt": end
+                }
+            }).lean()])
+                .then(([dataset]) => {
+                    for (var i in dataset) {
+                        var month = months[dataset[i].date.getMonth()];
+                        index = turnover.findIndex((obj => obj.month === month));
+                        for (var j in dataset[i].items) {
+                            turnover[index].turnover += dataset[i].items[j].price
+                        }
+                    }
+
+                    for (var i in turnover) {
+                        turnover[i] = Object.values(turnover[i]);
+                        sum += turnover[i][1];
+                    }
+
+                    for (var i = 0; i < 12; i += 3) {
+                        var total = turnover[i][1] + turnover[i + 1][1] + turnover[i + 2][1];
+                        quarter_turnover.push({ quarter: i / 3 + 1, turnover: total })
+                    }
+
+                    // console.log(quarter_turnover);
+                    // console.log(turnover);
+                    // console.log(sum);
+
+                    res.render("admin/statistic", {
+                        turnover: turnover,
+                        total: sum,
+                        quarter_turnover: quarter_turnover
+                    })
+                }
+            )
+
+        } else {
+            res.render("admin/statistic")
+        }
+
     }
 
     getTrending(req, res, next) {
@@ -152,7 +244,7 @@ class AdminController{
                     productList[i] = Object.values(productList[i]);
                 }
 
-                console.log(productList.slice(0, 10));    
+                // console.log(productList.slice(0, 10));    
                 res.render("admin/trending", {
                     topProducts: productList.slice(0, 10)
                 })
