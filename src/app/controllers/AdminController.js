@@ -262,5 +262,10 @@ class AdminController{
         return res.redirect("/admin/profile")
     }
 
+    async manageOrders(req,res){
+        let orders = await Order.find({}).lean();
+        res.render("admin/orders",{orders});
+    }
+
 }
 module.exports = new AdminController;

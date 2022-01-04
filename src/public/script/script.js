@@ -63,11 +63,26 @@ $(document).on('click','table tbody .banform',function(event){
     $.get(`/api/admin/updateAccount/${username}`,{
         option: option,
     },function(users){
-        console.log(users)
         const commentTemplate = Handlebars.compile(
         document.getElementById("userAccounts-template").innerHTML);
         const commentHtml = commentTemplate(users);
         console.log(commentHtml);
         $('#tbody-userAccounts').html(commentHtml);
+    })  
+});
+
+$(document).on('click','table tbody .delivery-form',function(event){
+    event.preventDefault();
+    let id = $(this).find('input.id').val();
+    let status = $(this).find('input.status').val() 
+    $.get(`/api/admin/orderStatus`,{
+        id,
+        status
+    },function(data){
+        const commentTemplate = Handlebars.compile(
+        document.getElementById("manageOrders-template").innerHTML);
+        const commentHtml = commentTemplate(data);
+        console.log(commentHtml);
+        $('#tbody-manageOrders').html(commentHtml);
     })  
 });

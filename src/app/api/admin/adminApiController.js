@@ -1,5 +1,6 @@
 const productService = require('../../service/productsService');
 const User = require('../../models/User');
+const Order = require('../../models/Order');
 
 exports.postComment = async (req,res)=>{
     if(!req.user){
@@ -33,4 +34,24 @@ exports.updateUserAccount = async (req,res)=>{
     const user = await User.find({role: { $ne: "Admin" }}).lean();
 
     res.status(200).json({user});
+}
+exports.changeOderStatus = async (req,res)=>{
+    console.log(req.query.id);
+    console.log(req.query.status);
+    let id = req.query.id;
+    let status = req.query.status;
+
+    
+    let thisOder= await Order.findOne({orderId:id}).lean();
+    console.log(thisOder);
+    if(status==='true'){
+        thisOder.status = true;
+    }
+    if(status==='false'){
+        thisOder.status = false;
+    }
+    const update = await Order.updateOne({orderId:id},thisOder);
+    const orders = await Order.find({}).sort({creatAt: 'descending'}).lean();
+    
+    res.status(200).json({orders});
 }

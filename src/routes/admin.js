@@ -32,6 +32,7 @@ router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);
 router.get('/update-account',adminController.updateAccount);
 router.get('/storeUpdate',adminController.storeUpdateAccount);
 router.get('/change-pass',adminController.changePassword);
+router.get('/manageOrders',adminController.manageOrders);
 router.post('/change-pass',adminController.postChangePassword);
 
 
