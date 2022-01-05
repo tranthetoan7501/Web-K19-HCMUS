@@ -51,7 +51,7 @@ exports.changeOderStatus = async (req,res)=>{
         thisOder.status = false;
     }
     const update = await Order.updateOne({orderId:id},thisOder);
-    const orders = await Order.find({}).sort({creatAt: 'descending'}).lean();
+    const orders = await Order.find({}).sort({date: 'descending'}).lean();
     
     res.status(200).json({orders});
 }

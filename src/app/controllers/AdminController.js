@@ -263,7 +263,7 @@ class AdminController{
     }
 
     async manageOrders(req,res){
-        let orders = await Order.find({}).lean();
+        let orders = await Order.find({}).sort({date: 'descending'}).lean();
         res.render("admin/orders",{orders});
     }
 
