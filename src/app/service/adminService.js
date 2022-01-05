@@ -100,7 +100,8 @@ class adminService{
 
             let user= this.viewItem(req.query.page,count,users);
             let totalPageArr = this.paginationArray(req.query.page,count,"");
-            return {user,totalPageArr}
+            let page = parseInt(req.query.page)||1;
+            return {user,totalPageArr,page}
     }
 
     async adminAndPagination(req,res,next){

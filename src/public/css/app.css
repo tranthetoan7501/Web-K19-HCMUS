@@ -802,12 +802,12 @@ table,th,td{
   display: none;
   position: absolute;
   background-color: #e9e9e9 !important;
-  min-width: 180px;
+  min-width: 190px;
   box-shadow: 4px 11px 16px 5px rgba(0, 0, 0, 0.2);
   padding: 5px 5px !important;
   z-index: 1000;
   height: fit-content !important;
-  left: -50px;
+  left: -67px;
 }
 .btn-drop {
   display: block;

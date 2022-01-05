@@ -31,9 +31,18 @@ exports.updateUserAccount = async (req,res)=>{
         thisUser.ban = false;
     }
     const update = await User.updateOne({username:req.params.name},thisUser);
-    const user = await User.find({role: { $ne: "Admin" }}).lean();
+    let temp = await User.find({role: { $ne: "Admin" }}).lean();
 
-    res.status(200).json({user});
+    let page = parseInt(req.query.index);
+    
+    
+    let start = (page-1)*15;
+    let end = start + 15;
+    if(end>=temp.length){
+        end = temp.length;
+    }
+    const user = temp.slice(start,end);
+    res.status(200).json({user,page});
 }
 exports.changeOderStatus = async (req,res)=>{
     console.log(req.query.id);

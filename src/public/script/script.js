@@ -58,15 +58,16 @@ window.onscroll = () =>{
 $(document).on('click','table tbody .banform',function(event){
     event.preventDefault();
     let username = $(this).find('input.username').val();
-    let option = $(this).find('input.option').val()
-    console.log(username,"sdd",option);   
+    let option = $(this).find('input.option').val();
+    let index = $(this).find('input.index').val();
+    console.log(index,"dsds");
     $.get(`/api/admin/updateAccount/${username}`,{
         option: option,
+        index
     },function(users){
         const commentTemplate = Handlebars.compile(
         document.getElementById("userAccounts-template").innerHTML);
         const commentHtml = commentTemplate(users);
-        console.log(commentHtml);
         $('#tbody-userAccounts').html(commentHtml);
     })  
 });
