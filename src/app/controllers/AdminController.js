@@ -106,10 +106,10 @@ class AdminController{
     }
     async storeUpdateAccount(req,res,next){
         const username = req.session.passport.user.username;
-        // console.log(username);
+
         let userInfo = await User.findOne({username:username}).lean();
 
-        // console.log(userInfo);
+
         userInfo.name = req.body.name;
         req.session.passport.user.name = req.body.name;
 
@@ -145,7 +145,7 @@ class AdminController{
                 }
             }).lean()])
                 .then(([dataset]) => {
-                    // console.log(dataset)  
+
                     for (var i in dataset) {
                         var day = "Day " + dataset[i].date.getDate();
                         index = turnover.findIndex((obj => obj.day == day));
@@ -160,8 +160,6 @@ class AdminController{
                         sum += turnover[i][1];
                     }
 
-                    // console.log(turnover);
-                    // console.log(sum);
 
                     res.render("admin/statistic", {
                         turnover: turnover,
@@ -205,9 +203,6 @@ class AdminController{
                         quarter_turnover.push({ quarter: i / 3 + 1, turnover: total })
                     }
 
-                    // console.log(quarter_turnover);
-                    // console.log(turnover);
-                    // console.log(sum);
 
                     res.render("admin/statistic", {
                         turnover: turnover,

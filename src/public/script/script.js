@@ -60,7 +60,6 @@ $(document).on('click','table tbody .banform',function(event){
     let username = $(this).find('input.username').val();
     let option = $(this).find('input.option').val();
     let index = $(this).find('input.index').val();
-    console.log(index,"dsds");
     $.get(`/api/admin/updateAccount/${username}`,{
         option: option,
         index
@@ -83,7 +82,6 @@ $(document).on('click','table tbody .delivery-form',function(event){
         const commentTemplate = Handlebars.compile(
         document.getElementById("manageOrders-template").innerHTML);
         const commentHtml = commentTemplate(data);
-        console.log(commentHtml);
         $('#tbody-manageOrders').html(commentHtml);
     })  
 });
