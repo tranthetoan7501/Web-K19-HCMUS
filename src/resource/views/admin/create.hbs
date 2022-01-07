@@ -4,17 +4,27 @@
 
     <form method="post" action="/admin/store" enctype="multipart/form-data">
         <h3>create new dish</h3>
-        <input type="text" name="category" placeholder="Category (Ex:side-dishes)" id="category" class="box">
-        <input type="text" name="description" placeholder="Description" id="description" class="box">
-        <input type="text" name="name" placeholder="Name" id="name" class="box">
-        <input type="text" name="old_price" placeholder="Old price" id="old_price" class="box">
-        <input type="text" name="new_price" placeholder="New price" id="new_price" class="box">
-        <input type="text" name="in_stock" placeholder="In stock" id="in_stock" class="box">
+        <label for="category">Choose a category:</label>
+        <select name = "category" style="max-width: 6.3em;">
+        <optgroup label="Category">
+        <option value="combo">Combo</option>
+        <option value="pizza">Pizza</option>
+        <option value="burger">Burger</option>
+        <option value="chicken">Chicken</option>
+        <option value="side-dishes">Side-dishes</option>
+        <option value="drink">Drink</option>
+        <input type="text" name="name" placeholder="Name" id="name" class="box" required>
+        <input type="text" name="description" placeholder="Description" id="description" class="box" required>
+        {{!-- <input type="number" name="old_price" placeholder="Old price" id="old_price" class="box" required> --}}
+        <input type="number" name="new_price" placeholder="Price" id="price" class="box" required>
+        <input type="number" name="in_stock" placeholder="In stock" id="in_stock" class="box" required>
         <div>
             <label for="image">Upload Image</label>
             <input type="file" id="image" name="image" value="" required>
         </div>
-        
+            {{#if message}}
+        <p style="font-size: smaller; color: red">{{message}}</p>
+        {{/if}}
         <button type="submit" class="btn">Create Now</button>
     </form>
 

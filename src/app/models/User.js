@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-    _id:{type:Schema.Types.ObjectId},
+    // _id:{type:Schema.Types.ObjectId},
     name:{ type: String},
     username:{type:String},
     password:{type:String},
@@ -12,7 +12,8 @@ const User = new Schema({
     dateOfBirth: {type: Date},
     image: {type:String},
     role: {type:String},
-    ban:{type:Boolean}
+    ban:{type:Boolean},
+    key: {type:Boolean}
 });
 
 

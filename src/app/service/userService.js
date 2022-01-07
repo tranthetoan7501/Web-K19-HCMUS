@@ -1,10 +1,11 @@
 const User = require('../models/User');
+const Menu = require('../models/Menu');
 const bcrypt = require('bcrypt');
 
 exports.findByUsername = (username) => {
     return User.findOne({
         username: username,
-        role: "Admin"
+        role: "Admin",
     }).lean();
 }
 
@@ -51,7 +52,8 @@ exports.register = async (name,username,password,email,phoneNumber,dateOfBirth) 
        dateOfBirth: dateOfBirth,
         phoneNumber: phoneNumber,
         image: "https://www.w3schools.com/howto/img_avatar2.png",
-        role: "Admin"
+        role: "Admin",
+        key: false
     });
 }
 
@@ -80,3 +82,14 @@ exports.changePassword = async(username,oldpassword,password,confirmPassword) =>
     return "Success"
 }
 
+exports.checkValidInput = async (category,name,description,new_price,in_stock) =>{
+    if(name.trim() === "" || description.trim()==="" || new_price <= 0 ||
+    in_stock <= 0) return "All information must be filled";
+    const check = await Menu.findOne({
+        name: name,
+    }).lean();
+    if(check) {
+        return "This product has existed in database."
+    }
+    return "Success";
+}

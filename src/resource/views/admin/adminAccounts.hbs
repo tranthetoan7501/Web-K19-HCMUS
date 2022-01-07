@@ -13,8 +13,8 @@
       <th scope="col">Username</th>
       <th scope="col">Email</th>
       <th scope="col">Phone Number</th>
-      <th scope="col">Date of birth</th>
-      {{!-- <th scope="col">Role</th> --}}
+      {{!-- <th scope="col">Date of birth</th> --}}
+      <th scope="col">Role</th>
     </tr>
   </thead>
   <tbody>
@@ -26,9 +26,14 @@
       <td>{{this.username}}</td>
       <td>{{this.email}}</td>
       <td>{{this.phoneNumber}}</td>
-      <td>
+      {{!-- <td>
         <a href="" class="mini-btn" >active</a>
-      </td>
+      </td> --}}
+      {{#if this.key}}
+        <td>Super Admin</td>
+      {{else}}
+        <td>Admin</td>
+      {{/if}}
     </tr>
     {{/each}}
   </tbody>

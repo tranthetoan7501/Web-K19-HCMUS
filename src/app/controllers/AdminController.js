@@ -19,7 +19,10 @@ class AdminController{
     }
 
     // //post : store
-    store(req,res,next){
+    async store(req,res,next){
+        const {category,name,description,new_price,in_stock} = req.body;
+        const check = await userService.checkValidInput(category,name,description,new_price,in_stock);
+        if(check === "Success"){
         Menu.findOne()
             .sort('-id')
             .then((item) => {
@@ -36,6 +39,10 @@ class AdminController{
             })
             .then(()=>res.redirect('/admin/storedItems'))
             .catch(next);
+        }
+        else{
+            res.render('admin/create',{message: check});
+        }
     }
 
     async storedItems(req,res,next){
@@ -266,6 +273,8 @@ class AdminController{
         let orders = await Order.find({}).sort({date: 'descending'}).lean();
         res.render("admin/orders",{orders});
     }
+
+
 
 }
 module.exports = new AdminController;

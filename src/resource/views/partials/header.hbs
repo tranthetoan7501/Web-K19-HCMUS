@@ -27,9 +27,11 @@
                         <p class="btn-drop" >My profile</p>
                     </a>
                     
+                    {{#if user.key}}
                     <a href="/sign-up">
                         <p class="btn-drop" >Register</p>
                     </a>   
+                    {{/if}}
                     
                      <a href="/admin/change-pass">
                         <p class="btn-drop" >Change password</p>
@@ -68,9 +70,6 @@
 
         </div>
         {{/if}}
-
-        
-
     </div>
     
 </header>
