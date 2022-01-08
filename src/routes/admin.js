@@ -29,11 +29,11 @@ router.get('/storedItems',loggedInGuard,adminController.storedItems);
 router.get('/account',loggedInGuard,adminController.viewAllAccount);
 router.get('/userAccounts/view',loggedInGuard,adminController.viewUserAccount);
 router.get('/userAccounts',loggedInGuard,adminController.viewAllUserAccounts);
-router.get('/update-account',adminController.updateAccount);
-router.get('/storeUpdate',adminController.storeUpdateAccount);
-router.get('/change-pass',adminController.changePassword);
-router.get('/manageOrders',adminController.manageOrders);
-router.post('/change-pass',adminController.postChangePassword);
+router.get('/update-account',loggedInGuard,adminController.updateAccount);
+router.get('/storeUpdate',loggedInGuard,adminController.storeUpdateAccount);
+router.get('/change-pass',loggedInGuard,adminController.changePassword);
+router.get('/manageOrders',loggedInGuard,adminController.manageOrders);
+router.post('/change-pass',loggedInGuard,adminController.postChangePassword);
 
 
 //router.get('/',sitesController.home);
